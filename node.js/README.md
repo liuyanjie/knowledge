@@ -128,13 +128,11 @@
 
 * [[译] NodeJS 错误处理最佳实践](https://segmentfault.com/a/1190000002741935)
 * [查看 Node.js 中的内存泄露](http://www.oschina.net/translate/tracking-down-memory-leaks-in-node-js-a-node-js-holiday-season)
-* [回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会](https://segmentfault.com/a/1190000000356347)
-* [深入理解Node.js的异步编程风格](http://lishaofengstar.blog.163.com/blog/static/1319728522013102665718744/)
-* [异步流程控制：7 行代码学会 co 模块](https://segmentfault.com/a/1190000002732081)
+
 * [Node.js debugging with Chrome DevTools (in parallel with browser JavaScript)](https://blog.hospodarets.com/nodejs-debugging-in-chrome-devtools)
 * [来自HeroKu的HTTP API 设计指南(中文版)](http://www.open-open.com/lib/view/open1409492280416.html)
 * [https://developers.trello.com/apis](https://developers.trello.com/apis)
-* [JavaScript Promise 告别异步乱嵌套](http://segmentfault.net/blog/lpgray/1190000002395343)
+
 * [Platform API Reference](https://devcenter.heroku.com/articles/platform-api-reference)
 * [nodejs中流(stream)的理解](http://segmentfault.com/blog/chshouyu/1190000000519006)
 * [怎样有效地学习 Node.js？](https://www.zhihu.com/question/19793473)
@@ -147,12 +145,15 @@
 * [how-do-i-debug-node-js-applications](http://stackoverflow.com/questions/1911015/how-do-i-debug-node-js-applications)
 * [how-do-i-get-started-with-node-js](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js)
 * [node-debug-tutorial](http://i5ting.github.io/node-debug-tutorial/)
+
 * [异步流程控制：7 行代码学会 co 模块](https://segmentfault.com/a/1190000002732081)
+* [深入理解Node.js的异步编程风格](http://lishaofengstar.blog.163.com/blog/static/1319728522013102665718744/)
 * [[译] 深入理解 Promise 五部曲：1. 异步问题](https://segmentfault.com/a/1190000000586666)
 * [[译] 深入理解 Promise 五部曲：2. 控制权转换问题](https://segmentfault.com/a/1190000000591382)
 * [[译] 深入理解 Promise 五部曲：3. 可靠性问题](https://segmentfault.com/a/1190000000593885)
 * [[译] 深入理解 Promise 五部曲：4. 扩展问题](https://segmentfault.com/a/1190000000600268)
 * [[译] 深入理解 Promise 五部曲：5. LEGO](https://segmentfault.com/a/1190000000611040)
+* [回调函数是指令式的，Promise 是函数式的：Node 错失的最大机会](https://segmentfault.com/a/1190000000356347)
 * [当面试官问你Promise的时候，他究竟想听到什么？](https://zhuanlan.zhihu.com/p/29235579)
-* [这一次，彻底弄懂 JavaScript 执行机制](https://juejin.im/post/59e85eebf265da430d571f89)
 * [一个Promise面试题](https://github.com/lzlu/Blog/issues/7)
+* [这一次，彻底弄懂 JavaScript 执行机制](https://juejin.im/post/59e85eebf265da430d571f89)

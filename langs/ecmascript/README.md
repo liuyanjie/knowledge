@@ -100,6 +100,8 @@
 * [Eloquent JavaScript(second edition)](http://eloquentjavascript.net/)
 * [深入理解JavaScript系列](http://www.cnblogs.com/TomXu/archive/2011/12/15/2288411.html)
 * [你不知道的JavaScript](https://github.com/getify/You-Dont-Know-JS)
+* [Exploring ES6](http://exploringjs.com/es6/index.html)
+* [Exploring JS](http://exploringjs.com/)
 
 #### 视频教程
 
@@ -142,7 +144,7 @@
 
 * [HTML Living Standard](https://html.spec.whatwg.org/)
 
-#### decorators
+### decorators
 
 * https://github.com/wycats/javascript-decorators
 * http://www.cnblogs.com/whitewolf/p/details-of-ES7-JavaScript-Decorators.html
@@ -150,6 +152,10 @@
 * https://www.zhihu.com/question/24863332
 * http://stackoverflow.com/questions/33801311/webpack-babel-6-es6-decorators
 * AOP
+
+### Meta-Programing
+
+* [28. Metaprogramming with proxies](http://exploringjs.com/es6/ch_proxies.html)
 
 ### Articles
 

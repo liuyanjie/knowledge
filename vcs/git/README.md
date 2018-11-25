@@ -49,6 +49,7 @@
 * [what-does-git-push-do-exactly](https://stackoverflow.com/questions/26005031/what-does-git-push-do-exactly)
 * [What are commit-ish and tree-ish in Git?](https://stackoverflow.com/questions/23303549/what-are-commit-ish-and-tree-ish-in-git)
 * [how-can-i-delete-all-git-branches-which-have-been-merged](https://stackoverflow.com/questions/6127328/how-can-i-delete-all-git-branches-which-have-been-merged)
+* [cant-push-to-remote-branch-cannot-be-resolved-to-branch](https://stackoverflow.com/questions/38034866/cant-push-to-remote-branch-cannot-be-resolved-to-branch)
 
 ## Refs
 

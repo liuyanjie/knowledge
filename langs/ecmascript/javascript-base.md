@@ -187,9 +187,10 @@ for(var j = 0, len = a.length; j < len; j++) {
 #### 识别方法
 
 
-* `typeof` (typeof x)
+* `typeof` (typeof x)（只能用于除`null`以外的原始类型）
 
-  * 返回值：首字母小写的字符串形式
+  返回值：首字母小写的字符串形式
+
   * 可以识别 `基本类型`，`null` 除外
   * 不能识别 `内置对象类型` (`Function` 除外)
   * 不能识别 `自定义类型`
@@ -197,16 +198,17 @@ for(var j = 0, len = a.length; j < len; j++) {
   * 不能识别 `null`，因为 `null` 被识别为 `object`
 
 
-* `instanceof` (x instanceof X)
+* `instanceof` (`x instanceof X`)，（不能用于原始类型）
 
-  * 返回值：`true` 或 `false`
+  返回值：`true` 或 `false`
+
   * 不能识别 `基本类型`，会返回 `false`。 `(true instanceof Boolean) -> false`
   * 可以识别 `内置对象类型`
   * 可以识别 `自定义类型` 及其 `父类型`
   * 不能识别 `undefined`、`null`，因为无 `Undefined`、`Null` 包装类型
 
 
-* `Object.prototype.toString`
+* `Object.prototype.toString` （自定义类型需要实现 `toString` 方法方可识别）
 
   eq.
   ```js
@@ -215,14 +217,15 @@ for(var j = 0, len = a.length; j < len; j++) {
   }
   ```
 
-  * 返回值：`[object TypeX]` 的字符串形式
+  返回值：`[object TypeX]` 的字符串形式
+
   * 可以识别 `基本类型`
   * 可以识别 `内置对象类型`
   * 可以识别 `自定义类型`，但是需要重载 `toString` 方法
   * 可以识别 `undefined`、`null`
 
 
-* `.prototype.constructor`
+* `.prototype.constructor` （不能用于 `null` 和 `undefined` ）
 
   eq.
   ```js
@@ -235,7 +238,8 @@ for(var j = 0, len = a.length; j < len; j++) {
   }
   ```
 
-  * 返回值：`function TypeX(){[native code]}` 或者 `function TypeX(){}`
+  返回值：`function TypeX(){[native code]}` 或者 `function TypeX(){}`
+  
   * 可以识别 `基本类型`
   * 可以识别 `内置对象类型`
   * 可以识别 `自定义类型`
@@ -644,7 +648,7 @@ var proto = {
 Shape.prototype = proto;
 
 Object.prototype.getPrototype = function () { 
-  return Object.getPrototypeOf(this) 
+  return Object.getPrototypeOf(this)
 };
 ```
 

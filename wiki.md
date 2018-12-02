@@ -1,8 +1,12 @@
-# Binary-to-text encoding
+# Wiki
+
+* [Glob](https://en.wikipedia.org/wiki/Glob_(programming))
+
+## Binary-to-text encoding
 
 * [wiki/Binary-to-text_encoding](https://en.wikipedia.org/wiki/Binary-to-text_encoding)
 
-## Radix
+### Radix
 
 * https://en.wikipedia.org/wiki/Base64
 * https://en.wikipedia.org/wiki/Base58

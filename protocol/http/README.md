@@ -1,5 +1,9 @@
 # README
 
+## StackOverflow
+
+* [PUT vs. POST in REST](https://stackoverflow.com/questions/630453/put-vs-post-in-rest)
+
 ## 服务设计参考
 
 Github 

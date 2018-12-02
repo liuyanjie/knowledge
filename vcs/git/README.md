@@ -1,4 +1,4 @@
-# GIT
+# Git知识体系
 
 * [Reference](https://git-scm.com/docs)
 * [ProGitV2](https://git-scm.com/book/zh/v2)

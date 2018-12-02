@@ -1,4 +1,4 @@
-# Architecture
+# 架构设计
 
 * [软件架构模式](http://colobu.com/2015/04/08/software-architecture-patterns/)
 * [10种常见的软件架构模式](https://www.cnblogs.com/IcanFixIt/p/7518146.html)

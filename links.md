@@ -84,3 +84,19 @@
 
 * [代码审查的价值——为何做、何时做、如何做？](http://blog.csdn.net/ricohzhanglong/article/details/14649067)
 * [Node.js 调试 GC 以及内存暴涨的分析](http://blog.eood.cn/node-js_gc)
+
+## Links
+
+* [提问的智慧](http://doc.zengrong.net/smart-questions/cn.html)
+* [书籍](books.md)
+* [编程思维](programming-thinking.md)
+* [五个为什么](https://zh.wikipedia.org/wiki/五个为什么)
+* [设计模式](https://zh.wikipedia.org/wiki/设计模式)
+* [设计模式：可复用面向对象软件的基础](https://zh.wikipedia.org/wiki/设计模式：可复用面向对象软件的基础)
+* [CRC](https://en.wikipedia.org/wiki/Cyclic_redundancy_check)
+* [ITU-T](https://en.wikipedia.org/wiki/ITU-T)
+* [Kerberos](https://zh.wikipedia.org/wiki/Kerberos)
+* [Convention_over_configuration](https://en.wikipedia.org/wiki/Convention_over_configuration)
+* [Separation_of_concerns](https://en.wikipedia.org/wiki/Separation_of_concerns)
+* [wiki/函数副作用](https://zh.wikipedia.org/wiki/函数副作用)
+* [wiki/Closure](https://en.wikipedia.org/wiki/Closure_(computer_programming))

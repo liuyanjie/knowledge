@@ -1,4 +1,4 @@
-# 区块链
+# 区块链技术
 
 * [区块链中的哈希与加密技术](https://zhuanlan.zhihu.com/p/27448591)
 * [哈希与区块链](https://yemengying.com/2018/02/11/hash-blockchain/)

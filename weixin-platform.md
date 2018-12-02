@@ -1,4 +1,4 @@
-# 微信平台
+# 微信开发者平台
 
 * [微信开放平台](https://open.weixin.qq.com/) [资源中心-开发资源](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list)
 
@@ -19,7 +19,7 @@
 * [微信公众平台](https://mp.weixin.qq.com)
 
   微信公众平台是运营者通过公众号为微信用户提供资讯和服务的平台
-plat
+
   微信公众平台是给个人、企业和组织提供业务服务与用户管理能力的全新服务平台。
 
   微信公众平台用于管理、开放微信公众号，简单的说就是微信公众号的后台运营、管理系统。

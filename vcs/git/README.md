@@ -1,14 +1,19 @@
-# Git知识体系
+# Git学习资源整理
+
+日常整理的 Git 相关的学习资料及文档
+
+## docs
 
 * [Reference](https://git-scm.com/docs)
 * [ProGitV2](https://git-scm.com/book/zh/v2)
 
 ## 整理内容
 
-* [GIT对象模型](./git-object-model.md)
-* [Git工作机制](./git-working-mechanism.md)
+* [GIT对象模型](git-object-model.md)
+* [Git工作机制](git-working-mechanism.md)
+* [Git使用规范](spec.md)
 
-## GIT学习
+## Git学习
 
 * [learngitbranching](http://learngitbranching.js.org/)
 * [git-cheatsheet](http://ndpsoftware.com/git-cheatsheet.html)

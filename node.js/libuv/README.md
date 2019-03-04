@@ -1,15 +1,17 @@
-# libuv
+# libuv源码分析
 
-## Overview
+源码分析主要包含以下内容：
 
-`libuv` 提供了两个与是时间循环结合使用的抽象：`handles`、`requests`
+1. [Overview](1-libuv-overview.md)
+2. [EventLoop](2-libuv-event-loop.md)
+3. [Handle and Requst](3-libuv-handle-and-request.md)
+4. [Queue](libuv-queue.md)
+5. [Timer](4-libuv-timer.md)
+6. [I/O-Watcher](5-libuv-io-watcher.md)
+7. [Stream](6-libuv-stream.md)
+8. [Async](7-libuv-async.md)
+9. [Threadpool](8-libuv-threadpool.md)
 
-Handles 表示某些 `长生命周期` 的 `对象`，他们能够在激活状态下执行某些操作。
+需要注意的是，以上内容的编排次序是按照依赖关系编排的，所以按顺序阅读更有助于理解。
 
-  * 一个 `prepare handles` 在活动时每次循环迭代都会调用一次回调。
-  * 每次有新连接时调用的 `TCP server handle` 都会调用它的连接回调。
-
-  通过以上两个示例可以看出，Handles 在每次事件循环都有机会得到执行。它是长周期的，可能会存在于多次事件循环。
-
-Requests 通常表示 `短生命周期` 的 `操作`，这些操作可以通过句柄执行：`write requests` 用于写数据在 `handle` 上，或者独立的，`getaddrinfo requests` 不需要 `handle` 而是 直接运行在 `event-loop` 上。
-
+例如 Threadpool 依赖 Async，Async 依赖 I/O-Watcher，它们都依赖 EventLoop Handle Request。

@@ -1,44 +1,53 @@
 
+repository: https://github.com/liuyanjie/knowledge
+
 posts:
-  - title: JavaScript基础
-    date: 2018-04-11 22:05:14
-    path: langs/ecmascript/javascript-base.md
-    imageBaseUrl: https://raw.githubusercontent.com/liuyanjie/knowledge/master/langs/ecmascript/
-    categories:
-    - Syntax
-    - JavaScript
-    tags: 
-    - JavaScript
-    - JavaScript基础
+  - title: libuv源码分析（一）全局概览（Overview）
+    date: 2019-04-23 23:00:01+0800
+    path: node.js/libuv/1-libuv-overview.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（二）事件循环（Eventloop）
+    date: 2019-04-23 23:00:02+0800
+    path: node.js/libuv/2-libuv-event-loop.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（三）资源抽象：Handle 和 Request
+    date: 2019-04-23 23:00:03+0800
+    path: node.js/libuv/3-libuv-handle-and-request.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（四）定时器（Timer）
+    date: 2019-04-23 23:00:04+0800
+    path: node.js/libuv/4-libuv-timer.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（五）IO观察者（io_watcher）
+    date: 2019-04-23 23:00:05+0800
+    path: node.js/libuv/5-libuv-io-watcher.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（六）流（Stream）
+    date: 2019-04-23 23:00:06+0800
+    path: node.js/libuv/6-libuv-stream.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（七）异步唤醒（Async）
+    date: 2019-04-23 23:00:07+0800
+    path: node.js/libuv/7-libuv-async.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
+  - title: libuv源码分析（八）线程池（Threadpool）
+    date: 2019-04-23 23:00:08+0800
+    path: node.js/libuv/8-libuv-threadpool.md
+    imageBaseUrl: 
+    categories: [源码分析]
+    tags: [libuv, node.js, eventloop]
 
-  - title: JavaScript深度
-    date: 2018-05-02
-    path: langs/ecmascript/javascript-deep.md
-    imageBaseUrl: https://raw.githubusercontent.com/liuyanjie/knowledge/master/langs/ecmascript/
-    categories:
-    - Syntax
-    - JavaScript
-    tags: 
-    - JavaScript
-    - JavaScript执行上下文、变量对象、活动对象、词法作用域、闭包、执行过程
-
-  - title: GIT对象模型
-    date: 2018-05-07
-    path: vcs/git/git-object-model.md
-    imageBaseUrl: https://raw.githubusercontent.com/liuyanjie/knowledge/master/vcs/git/
-    categories:
-    - GIT
-    - VCS
-    tags: 
-    - GIT对象模型
-
-  - title: Git命令
-    date: 2018-05-07
-    path: vcs/git/git-usage.md
-    imageBaseUrl: https://raw.githubusercontent.com/liuyanjie/knowledge/master/vcs/git/
-    categories:
-    - GIT
-    - VCS
-    tags: 
-    - Git命令
-    

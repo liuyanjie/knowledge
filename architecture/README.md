@@ -13,6 +13,9 @@
 * [轻松监控上万台服务器：企业运维监控平台架构设计与实践指南](http://www.yunweipai.com/archives/7554.html)
 * [监控体系建设（完整）](http://www.yunweipai.com/archives/15189.html)
 
+* [进大厂必须掌握的50个微服务面试问题](https://cloud.tencent.com/developer/article/1346868)
+* [简单聊聊SOA和微服务](https://juejin.im/post/592f87feb123db0064e5ef7c)
+
 ## 高并发
 
 ## LB & Proxy

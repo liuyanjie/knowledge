@@ -8,8 +8,6 @@
 
 特别是微服务这种新生的名词，都有一个特点：`一解释就懂，一问就不知，一讨论就打架。`
 
-https://www.cnblogs.com/imyalost/p/6792724.html
+* [微服务架构](https://www.cnblogs.com/imyalost/p/6792724.html)
 
 ## 高内聚低耦合
-
-

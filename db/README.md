@@ -35,5 +35,5 @@ Ralf算法 vs Paxos协议
 强一致性(Ralf算法)、高可用
 
 * [ETCD应用场景](https://tonydeng.github.io/2015/10/19/etcd-application-scenarios/)
-* [etcd 服务注册与发现](http://ralphbupt.github.io/2017/05/04/etcd-服务注册与发现/)
-* [Etcd 架构与实现解析](http://jolestar.com/etcd-architecture/)
+* [ETCD服务注册与发现](http://ralphbupt.github.io/2017/05/04/etcd-服务注册与发现/)
+* [ETCD架构与实现解析](http://jolestar.com/etcd-architecture/)

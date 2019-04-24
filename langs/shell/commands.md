@@ -459,6 +459,13 @@ SMB
 * atrm 命令用于删除待执行任务队列中的指定任务。
 * crontab 命令被用来提交和管理用户的需要周期性执行的任务
 
+## 内存相关
+
+* procrank
+* procmem
+* meminfo
+* vmstat
+
 ## 包管理
 
 * dpkg-query

@@ -21,7 +21,7 @@ Last-Modified: Fri , 12 May 2015 13:10:33 GMT
 If-Modified-Since : Fri , 12 May 2015 13:10:33 GMT
 ```
 
-ETag/If-None-Match
+`ETag/If-None-Match`
 
 ```txt
 ETag: W/"a627ff1c9e65d2dede2efe0dd25efb8c"

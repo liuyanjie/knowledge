@@ -145,7 +145,6 @@
 * [how-do-i-debug-node-js-applications](http://stackoverflow.com/questions/1911015/how-do-i-debug-node-js-applications)
 * [how-do-i-get-started-with-node-js](http://stackoverflow.com/questions/2353818/how-do-i-get-started-with-node-js)
 * [node-debug-tutorial](http://i5ting.github.io/node-debug-tutorial/)
-
 * [异步流程控制：7 行代码学会 co 模块](https://segmentfault.com/a/1190000002732081)
 * [深入理解Node.js的异步编程风格](http://lishaofengstar.blog.163.com/blog/static/1319728522013102665718744/)
 * [[译] 深入理解 Promise 五部曲：1. 异步问题](https://segmentfault.com/a/1190000000586666)
@@ -157,3 +156,5 @@
 * [当面试官问你Promise的时候，他究竟想听到什么？](https://zhuanlan.zhihu.com/p/29235579)
 * [一个Promise面试题](https://github.com/lzlu/Blog/issues/7)
 * [这一次，彻底弄懂 JavaScript 执行机制](https://juejin.im/post/59e85eebf265da430d571f89)
+* [更快的异步函数和 Promise](https://v8.js.cn/blog/fast-async/)
+* [Tasks, microtasks, queues and schedules](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)

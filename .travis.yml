@@ -10,6 +10,7 @@ env:
   - BLOG_REPO=https://github.com/liuyanjie/liuyanjie.github.io.git
 
 before_install:
+  - export TZ='Asia/Shanghai'
   - echo -e "machine github.com\n  login $CI_USER_TOKEN" > ~/.netrc
   - git config --global user.name  liuyanie-ci-bot
   - git config --global user.email liuyanie-ci-bot@mail.com

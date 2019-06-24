@@ -1,4 +1,4 @@
-# Git Working Mechanism
+# Git命令工作机制
 
 ## 仓库创建
 

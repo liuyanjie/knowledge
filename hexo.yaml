@@ -51,3 +51,15 @@ posts:
     categories: [源码分析]
     tags: [libuv, node.js, eventloop]
 
+  - title: Git对象模型
+    date: 2019-06-24 19:00:08+0800
+    path: vcs/git/git-object-model.md
+    imageBaseUrl: 
+    categories: [git]
+    tags: [vcs, git]
+  - title: Git命令工作机制
+    date: 2019-06-24 19:00:08+0800
+    path: vcs/git/git-working-mechanism.md
+    imageBaseUrl: 
+    categories: [git]
+    tags: [vcs, git]

@@ -23,7 +23,7 @@ script:
   - git submodule update
   - yarn install
   - npx hexo clean
-  - npx hexo-post -c .. -o .
+  - npx hexo-post -v -c .. -o .
   - npx hexo d -g
   - git add .
   - git commit -m "Content updated by Travis-CI At $(date '+%Y-%m-%d %H:%M:%S')"

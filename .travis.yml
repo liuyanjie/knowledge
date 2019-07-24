@@ -26,5 +26,5 @@ script:
   - npx hexo-post -v -c .. -o .
   - npx hexo d -g
   - git add .
-  - git commit -m "Content updated by Travis-CI At $(date '+%Y-%m-%d %H:%M:%S')"
+  - git diff-index --quiet HEAD || git commit -m "Content updated by Travis-CI At $(date '+%Y-%m-%d %H:%M:%S')"
   - git push

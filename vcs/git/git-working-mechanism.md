@@ -1,38 +1,68 @@
-# Git命令工作机制
+# Git 命令工作机制
 
-Git是当前最广泛使用的版本控制系统，具备非常强大的版本控制能力。Git有非常多的命令，很多人被种类繁多的命令搞的非常头大，也会经常忘记。本文尝试从原理角度来介绍Git常用命令，以便于加深对Git原理的理解。只有理解了原理，才能知道这些命令到底对仓库做了什么，进而才能更好使用命令，也更加不容易忘记。作为一个版本控制系统，理解其原理也是十分必要的，否则，有些命令你根本不敢用，因为搞丢代码的成本是非常大的，谁都不想自己或他人做工作被抹除。知道原理后，即使一不小心操作错了，也可以坦然处之，轻松恢复。
+Git 是当前最广泛使用的版本控制系统，具备非常强大的版本控制能力。Git 有非常多的命令，很多人被种类繁多的命令搞的非常头大，也会经常忘记。本文尝试从原理角度来介绍 Git 常用命令，以便于加深对 Git 原理的理解。只有理解了原理，才能知道这些命令到底对仓库做了什么，进而才能更好使用命令，也更加不容易忘记。作为一个版本控制系统，理解其原理也是十分必要的，否则，很多命令根本不敢用，用错了可能会造成严重后果，搞丢代码的成本是非常大的，谁都不想自己或他人做工作被一键抹除。知道原理后，即使一不小心操作错了，也可以坦然处之，轻松恢复。
 
-## 仓库基础
+相比命令行工具，可视化的 GUI 就要直观和方便很多，但是很多时候一样可能因为对于具体做什么不了解而操作错误，并且，目前常用的 GUI 软件，都未提供全部的命令行操作能力，GUI 很多时候，也没有命令方便快捷。
 
-Git是一个分布式的版本控制系统，这意味着在Git中版本库有 `本地版本库` 和 `远程版本库` 之分。不同于 **svn** 只有一个中心仓库，必须连接到中心仓库才能提交，Git可以随时提交而不依赖于中心仓库，因为你本地就是一个独立的仓库。
+## 仓库概述
 
-每个**原始仓库**可以存在多个仓库副本，仓库副本通常是 `clone` 创建的，仓库副本和原始仓库是上下游关系，这些副本仓库可能在本地，也可能在某台服务器上。**原始仓库**如果托管在托管服务器上，还可以通过 `Fork`（本质也是`clone`）的方式创建很多位于托管服务上的副本，`Fork` 其实并不是Git提供的，而是托管服务提供的。`Fork` 出来的仓库副本**原始仓库**与之间的关系也由托管服务记录和维护的，这些副本仓库都有一个相同的 `上游仓库`（即原始仓库），同时副本仓库也可以继续被 `Fork` 产生多个 `下游仓库`，这些下游仓库可以通过 `PullRequest` 或 `MergeRequest` 向上游仓库发起跨仓库的 `Merge`。**本地仓库**可能是**原始仓库**或**原始仓库**的副本，相对于本地仓库，这些仓库称之为远程仓库，本地仓库通过 `push`、`fetch` 等命令和远程仓库同步。
+Git 是一个分布式的版本控制系统，不同于 **svn** 只有一个**中心仓库**，必须能连接到 svn 服务才能提交，Git 可以随时提交而不依赖于中心仓库，因为本地存在一个独立的仓库，完全支持离线操作。本地仓库和远程仓库是一种比较松散的关系。
 
-如果同时一个本地版本库可以同时对应多个远程版本库，多个远程仓库可以是从一个最原始的版本库 `Fork`产生的。
+Git 中，每个仓库可以存在多个仓库副本，这个仓库暂且称为 “原始仓库”，“原始仓库” 因为需要备份或协作等方面的需要通常存储在托管服务器上。
 
-概念：上游仓库、下游仓库、副本仓库、本地仓库。
+**仓库副本**通常是通过 `clone` 或 `Fork`（本质其实也是`clone`） 创建的，仓库副本和原始仓库是**上下游**关系，这些副本仓库可能在本地，也可能在某台服务器上。
 
-仓库之间通过 同步 和 合并 产生关系。
+**原始仓库**如果托管在托管服务器上，通过 `Fork` 的方式可以创建很多位于托管服务上的副本，这些副本在不同的账户下，`Fork` 并不是 Git 提供的，而是托管服务提供的。`Fork` 出来的仓库副本与原始仓库之间的关系也由托管服务记录和维护的，这些副本仓库都有一个相同的 `上游仓库`（即原始仓库），同时副本仓库也可以继续被 `Fork` 产生多个 `下游仓库`，下游仓库可以通过 `PullRequest/MergeRequest` 向上游仓库发起跨仓库的 `merge` 请求，进行仓库间的交互。这些位于托管服务上的仓库，不论是原始仓库还是`Fork`出来的副本仓库，都可以被 `clone` 到本地创建本地仓库，本地仓库也是一个副本。
 
-正式有如上描述的这些关系，才有如下介绍的这些命令，这些命令也正是为处理并维护这些关系而设计的。从设计者的角度出发，思考设计者应该提供哪些能力。
+**本地仓库**可以是**原始仓库**的副本，也可以是**原始仓库**的某副本的副本，相对于本地仓库，这些仓库称之为**远程仓库**，本地版本库可以同时对应多个远程仓库。本地仓库通过 `push`、`fetch` 等命令和远程仓库同步。
+
+通过前面的描述，引申出了几个概念：原始仓库 <-> 副本仓库、上游仓库 <-> 下游仓库、远程仓库 <-> 本地仓库，这些概念都是相对而言的，便于进行角色区分。
+
+仓库间的交互：
+
+1. 远程仓库 和 本地仓库 之间，主要进行的是同步，本地修改同步到远程，或远程同步到本地。
+2. 远程仓库 和 远程仓库 之间，主要进行的是跨仓库的分支合并，也就是 `PullRequest/MergeRequest`。
+
+在未使用 `Fork` 的模式中，就没有 `2` 这种情况了。
+
+本地仓库主要用来完成内容变更，远程仓库主要用来完成多人协作与数据备份。
+
+托管服务上，`Fork` 创建的仓库副本关系如下：
+
+```
+base/Base
+├──── user_a1/Base
+├──── user_a2/Base
+├──── user_a3/Base
+├──── user_a4/Base
+│     ├─── user_b1/Base
+│     └─── user_b2/Base
+└──── user_a5/Base
+```
+
+这些仓库都可被有权限的用户 `pull` 本地仓库，并正在修改之后 `push` 远程仓库。
+
+为什么需要 `Fork`？
+
+1. 避免分配原始仓库的访问权限给无关用户，防止仓库被破坏
+2. 本地仓库无法直接 Merge 到远程仓库，远程副本仓库能够提供了合并到原始仓库的能力
+3. 合并需要发起 `PullRequest/MergeRequest` 提供了代码审核的窗口
+
+Git 的单个仓库的工作原理是比较简单的，但是当多个不同角色的仓库同时存在协同工作的时候，确实非常复杂的，有非常多的玩法。只有真正的理解内部原理，方能运用自如。
+
+Git 的命令是建立在这些底层模型上的，命令也正是为处理并维护这些关系而设计的。所以也只要有理解原理，才能熟练运用这些命令。
+
+下面开始进入正题。
 
 ## 仓库创建
 
-本地仓库对应的远程仓库记录在 `.git/config` 文件中。本地仓库可以与多个的远程仓库 `pull/push` 代码。
+任何操作开始前，首先要有个一个仓库。
 
 ### [Init](https://git-scm.com/docs/git-init)
 
-> 创建一个空的 Git 仓库，或者重新初始化一个已经存在的 Git 仓库。
+核心功能：
 
-```sh
-git init
-  [-q | --quiet]
-  [--bare]
-  [--template=<template_directory>]
-  [--separate-git-dir <git dir>]
-  [--shared[=<permissions>]]
-  [directory]
-```
+1. 创建一个新的空 Git 仓库，或者重新初始化一个已经存在的 Git 仓库。
 
 常规方式创建一个仓库：
 
@@ -114,13 +144,24 @@ $ cat workspace/.git
 gitdir: /Users/liuyanjie/git-learn/.tig
 ```
 
-相比常规方式创建仓库，可以看到
+从上面的目录结构可以看到，相比常规方式创建仓库，通过分离的方式创建的仓库将 `仓库(.git)` 从 `工作区目录(workspace)` 中分离出去。`仓库(.git)` 不再是一个目录，而是包含指向仓库路径的一个文件，实际上利用这一特性，可以创建多个工作区共享同一仓库，也就可以支持同一个仓库拥有多个工作区。
 
-1. 分离方式创建仓库 可以将 `仓库(.git)` 和 `工作区目录(workspace)` 分离，常规方式创建的仓库，`仓库(.git)` 就在 `工作区目录(workspace)` 下。
-2. 分离方式创建的仓库，在 `工作区目录(workspace)` 下 `.git` 文件不再是仓库目录，而是包含指向仓库路径的一个文件。利用这一特性，可以创建多个工作区共享同一仓库。
-3. 仓库文件的目录可以是除了 `.git` 之外的其他的合法的目录名称。
+另外也可以通过环境变量 `GIT_DIR=path/to/repo.git` 指定 `仓库(.git)` 的路径，下面这种方式和上面的方式是等价的（注意：相对路径不同）。
 
-参考在创建的过程中，拷贝了一些的模版文件到 `仓库(.git)` 下，可以在运行的时候通过 `--template=` 或 `GIT_TEMPLATE_DIR` 环境变量 指定模版路径位置，模版示例如下：
+```sh
+$ GIT_DIR=../.tig git init workspace
+Initialized empty Git repository in /Users/liuyanjie/git-learn/.tig/
+```
+
+不仅如此，Git 还支持将 Objects 从 `仓库(.git)` 中移出，通过 `GIT_OBJECT_DIRECTORY=$GIT_DIR/objects` Git 对象存储路径，不过这种用法在本地很少见。
+
+有兴趣可以用以下命令做实验：
+
+```sh
+$ GIT_OBJECT_DIRECTORY=../objects GIT_DIR=../.tig git init workspace
+```
+
+默认情况下，仓库在创建的过程中，拷贝了一些的模版文件到 `仓库(.git)` 目录下，默认的模版路径和文件示例如下：
 
 ```sh
 $ tree /usr/local/Cellar/git/2.18.0/share/git-core/templates
@@ -144,19 +185,28 @@ $ tree /usr/local/Cellar/git/2.18.0/share/git-core/templates
 2 directories, 13 files
 ```
 
-基于这一点，我们可以已一个参考作为模版，创建另一个仓库，Git 会把模板路径下的文件的复制到新的仓库下。
+可以看到，模版目录里面的内容，和实际仓库的内容相同的，用模版创建仓库时，就是原封不动的将仓库内容拷贝到仓库目录下。
+基于这一点，我们可以以一个已经存在的仓库作为模版，创建另一个仓库，Git 会把模板路径下的文件的拷贝到新的仓库下。
 
-运行命令时，也可通过以下设置以下环境变量：
+可以在运行的时候通过 `--template=` 或 `GIT_TEMPLATE_DIR` 环境变量 或 `init.templateDir` 配置 指定模版路径位置。
 
-* `GIT_DIR=.git` GIT仓库路径
-* `GIT_OBJECT_DIRECTORY=$GIT_DIR/objects` GIT对象存储路径
-* `GIT_TEMPLATE_DIR=path/to/git-core/templates` 模版路径，命令行参数：`--template`，配置：`init.templateDir`
+还可以通过 `git init --bare` 参数创建一个裸仓库，裸仓库的指没有工作区的仓库。
 
-在一个已经存在的仓库目录中运行 `init` 命令是安全的，它不会覆盖原来已经存在的东西。重新运行 `init` 的主要原因是挑选新添加的模版，或者移动仓库到其他的地方，如果 `--separate-git-dir` 指定的话。
+```sh
+$ git init --bare          
+Initialized empty Git repository in /Users/liuyanjie/git-learn/
 
-初始化仓库是Git工作流中的第一步，一般情况下，需要两个仓库，一个本地仓库，一个远程仓库。
+# liuyanjie @ bogon in /Users/liuyanjie/git-learn on git:master o [16:48:01] 
+$ ls
+HEAD        config      description hooks       info        objects     refs
+```
 
-Init后的 Git 配置：
+因为无工作区，仓库文件直接放在当前目录下了，可以手动创建工作区并链接到仓库目录。
+
+在一个已经存在的仓库目录中运行 `init` 命令是安全的，它不会覆盖原来已经存在的文件（包括仓库和工作区）。
+重新运行 `init` 的可以用来安装新添加的模版，或者用来将仓库分离到其他的位置。
+
+新创建的仓库的仓库配置：
 
 ```ini
 [core]
@@ -168,49 +218,36 @@ Init后的 Git 配置：
 	precomposeunicode = true
 ```
 
-只有 `core` 相关的几个配置项
+只有 `core` 相关的几个配置项。
+
+通过以上对命令及参数的效果的参考，可以了解到 Git 文档中不为人知的一些内容。
+
+初始化仓库是 Git 工作流中的第一步，通常发生在本地，在托管服务创建仓库之后，仓库并未初始化，需要在本地创建并初始化仓库后，同步到远程，然后再同步本地。
+
+通常情况下，都是需要两个仓库的，一个本地仓库，一个远程仓库，以支持复杂的开发工作流。
 
 ### [Clone](https://git-scm.com/docs/git-clone)
 
-> 克隆仓库到一个新的目录，为每一个被克隆仓库中的分支创建对应的远程追踪分支。然后从克隆仓库的当前活动分支创建并检出初始分支到工作区目录。
+核心功能：
 
-```sh
-git clone
-  [-q] [--quiet]
-  [-v] [--verbose]
-  [--progress]
-  
-  [-l] [-s] [--no-hardlinks]
-  [-n] [--no-checkout]
-  
-  [--template=<template_directory>]
-  [--separate-git-dir <git-dir>]
-  [--bare]
-  [--mirror]
+1. 初始化并配置仓库，记录本地仓库和远程仓库的对应关系，包括仓库和分支映射关系
+   1. 克隆仓库到一个新的目录，实际上就是 `git init`
+   2. 为每一个被克隆仓库中的分支创建对应的远程追踪分支
+   3. 从克隆仓库的当前活动分支创建并检出初始分支到工作区目录
+2. 同步仓库
+   1. 通过 `git fetch` 更新所有远程追踪分支
+   2. 通过 `git pull` 合并远程 `master` 分支到本地 `master` 分支，快速合并
 
-  [-c <key>=<value>] [--config <key>=<value>]
+类似于如下过程：
 
-  [-o <origin-name>] [--origin <origin-name>]
-  [-b <branch-name>] [--branch <branch-name>]
-  [--no-tags]
-  [-u <upload-pack>]
+`git init` -> `git remote set-url origin git://...` -> `git fetch` -> `git pull` -> `git checkout HEAD`
 
-  [--depth <depth>]
-  [--shallow-since=<date>]
-  [--shallow-exclude=<revision>]
+通过以上核心功能可以看到，`Clone` 实际上是对多个命令功能的组合，并进行了一些配置工作。这样我们可以猜测，`Clone` 命令的很多参数应该是从其他命令继承过来的。
 
-  [--[no-]single-branch]
+克隆一个远程仓库需要存在一个远程仓库，并且有一个可以访问的远程仓库的地址，Git支持多种访问协议，最常见的如 `git://` 和 `https://`。
+详见：[GIT-URLS](https://git-scm.com/docs/git-clone#_git_urls_a_id_urls_a)
 
-  [--reference <repository>]
-  [--dissociate]
-  
-  [--recurse-submodules[=<pathspec>]]
-  [--[no-]shallow-submodules]
-  [-j <n>] [--jobs <n>]
-  [--] <repository> [<directory>]
-```
-
-克隆一个远程仓库需要存在一个远程仓库，并且有一个可以访问的远程仓库的地址，对应 `<repository>` 参数，Git支持多种访问协议，最常见的如 `git://`。详见：[GIT-URLS](https://git-scm.com/docs/git-clone#_git_urls_a_id_urls_a)
+下面是一个常见的 `clone` 操作：
 
 ```sh
 $ git clone git@github.com:liuyanjie/spec.git
@@ -219,7 +256,11 @@ remote: Counting objects: 49, done.
 remote: Total 49 (delta 0), reused 0 (delta 0), pack-reused 49
 Receiving objects: 100% (49/49), 49.83 KiB | 25.00 KiB/s, done.
 Resolving deltas: 100% (15/15), done.
+```
 
+通过输出内容可以看到，`Clone` 主要都做了哪些事情，可以对比上面的过程描述。
+
+```SH
 $ cat spec/.git/config
 [remote "origin"]
 	url = git@github.com:liuyanjie/spec.git
@@ -229,42 +270,27 @@ $ cat spec/.git/config
 	merge = refs/heads/master
 ```
 
-相比 `git init`，`git clone` 之后的仓库配置文件中，增加了以上内容，配置 `本地分支` 和 `远程分支` 间的追踪关系，该配置为 Git 默认配置，一般不需要修改。
+`git clone` 之后的仓库配置中，可以看到多出了以上内容，配置了对应的远程仓库地址及追踪关系，配置了本地 `master` 对应的远程分支，该配置为 Git 默认配置，一般不需要修改。
 
-`git clone` 工作流程（猜测）：
-
-`INIT` -> `REMOTE-TRACKING` -> `FETCH` -> `CHECKOUT HEAD`
-
-`git init` -> `git remote set-url origin git://...` -> `git fetch` -> [`git merge`] -> `git checkout HEAD`
-
-Clone过程可以进行哪些控制：
-
-1. `--bare`：同 `Init` 相同，可以 `Clone` 一个 `Bare` 仓库到本地。
-2. `--mirror`：可以进行镜像 `Clone`，制作镜像仓库。
-3. `--template=`：同 `Init` 相同，可以指定模版。
-4. `--separate-git-dir=<git dir>`：分离仓库和工作区目录。
-5. `--reference[-if-able] <repository>`：可以通过该参数指定一个已存在的仓库进行加速，通常用在频繁的完整的 `Clone` 上。
-6. `--depth`：可以指定克隆的 Commit 数量。
-
-克隆本地仓库
+常见用法：
 
 ```sh
+# 克隆本地仓库 默认是硬链接的，关闭需要加 --no-hardlinks
 git clone path/to/local/git/repository
-```
 
-克隆远程仓库
-
-```sh
-$ git clone git@github.com:liuyanjie/knowledge.git --depth=1
-Cloning into 'knowledge'...
-remote: Counting objects: 300, done.
-remote: Compressing objects: 100% (247/247), done.
-
+# 克隆远程仓库
 $ git clone git@github.com:liuyanjie/knowledge.git
 Cloning into 'knowledge'...
 remote: Counting objects: 495, done.
 remote: Compressing objects: 100% (141/141), done.
 
+# 克隆远程仓库 只克隆最后一个Commit提速
+$ git clone git@github.com:liuyanjie/knowledge.git --depth=1
+Cloning into 'knowledge'...
+remote: Counting objects: 300, done.
+remote: Compressing objects: 100% (247/247), done.
+
+# 克隆远程仓库 只克隆最后一个Commit提速，并通过另外一个仓库加速
 $ git clone \
   --depth=1 \
   --reference-if-able=/Volumes/Data/Data/ws/knowledge \
@@ -275,23 +301,15 @@ remote: Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
 
 在 `Clone` 的过程中，通过一些参数可以有效的减少 `Clone` 的等待时间，如在 CI 的构建流程中，可以提高构建时间。
 
-## 仓库维护
+了解 `git clone` 命令的实际工作流程，能够了解 `clone` 的过程做了什么以及能做到什么，日常使用也用不到很多复杂的操作，关于更多的命令参数，可自行通过文档了解。
 
-仓库维护包括维护 `本地仓库` 和 `远程仓库`，在 Git 中，很多时候，同一个 `远程仓库` 可以同时存在多个 `本地仓库`，偶尔，同一个 `本地仓库` 可以同时对应多个 `远程仓库`。
+## 仓库同步
 
-一旦 建立了 `本地仓库` 和 `远程仓库` 的对应关系，就需要频繁进行 `远程仓库` 和 `本地仓库` 之间的分支、标签等数据同步，对应操作有 `push、fetch、pull` 等。
+因为 Git 是一个分布式的版本控制系统，同时存在多个仓库副本，仓库副本之间的同步是非常重要的一环。不同于许多分布式系统（例如分布式数据库）能够自动完成节点间的数据同步，Git 无法自动的完成仓库同步，所以仓库同步完全依赖于使用者自行通过各类操作界面完成。
 
-同步的内容主要有：
+数据同步的内容主要有：分支、标签、数据等内容
 
-* 分支同步：分支的 `创建、修改、删除`，本地向远程同步，远程向本地同步
-* 标签同步：标签的 `创建、修改、删除`，本地向远程同步，远程向本地同步
-* 数据同步
-
-同步数据的基础在于 `本地仓库` 和 `远程仓库` 间存在的对应关系，这一关系 使用 `RefSpec` 进行描述。
-
-### [RefSpec](https://git-scm.com/book/zh/v1/Git-内部原理-The-Refspec)
-
-[Git 内部原理 - The Refspec](https://git-scm.com/book/zh/v1/Git-内部原理-The-Refspec)
+数据同步基于 [RefSpec](https://git-scm.com/book/zh/v1/Git-内部原理-The-Refspec) ，它描述了本地仓库与远程仓库间分支和标签的映射关系及同步策略。
 
 下面示例中 `+refs/heads/*:refs/remotes/origin/*` 即为 `RefSpec`。
 
@@ -304,7 +322,15 @@ $ cat .git/config
         fetch = +refs/heads/*:refs/remotes/origin/*
 ```
 
-RefSpec 示例：
+`Ref`
+
+示例中的 `RefSpec` 表明：远程仓库中所有分支 `refs/heads/*`，对应到本地仓库下所有分支 `refs/remotes/origin/*`，分支名称不变。如果需要改变分支名称，则需要配置针对分支特定的 `RefSpec`。
+
+在了解 `RefSpec` 之前，需要先了解下 `Ref`：[Git 内部原理 - Git References](https://git-scm.com/book/zh/v1/Git-内部原理-Git-References)
+
+如同描述的一样，`RefSpec` 描述了 `remote-refs` 和 `local-refs` 的对应关系。
+
+RefSpec 写法示例：
 
 ```txt
 +refs/heads/*:refs/remotes/origin/*
@@ -315,15 +341,9 @@ master:master
 master:
 ```
 
-`RefSpec` 主要用来表示 `本地版本库` 和 `远程版本库` 之间的 `分支`、`标签` 等数据的对应关系。
+`RefSpec` 的格式是一个可选的 `+` 号，接着是 `<src>:<dst>` 的格式，这里 `<src>` 是远程仓库的引用格式，`<dst>` 是将要记录在本地仓库的引用格式。可选的 `+` 号告诉 Git 在即使不能快速演进的情况下，也去强制更新它，也就是与远程保持强一致的同步。
 
-指定获取哪些 `remote-refs` 更新 `local-refs`，当没有在命令行显示指明 `RefSpec`，会按照下面的默认策略执行。
-
-`RefSpec` 的格式是一个可选的 `+` 号，接着是 `<src>:<dst>` 的格式，这里 `<src>` 是远端上的引用格式，`<dst>` 是将要记录在本地的引用格式。可选的 `+` 号告诉 Git 在即使不能快速演进的情况下，也去强制更新它。
-
-所以上面示例中的 `RefSpec`，远程仓库中所有分支 `refs/heads/*`，对应到本地仓库下所有分支 `refs/remotes/origin/*`，分支名称不变。如果需要改变分支名称，则需要配置特定的 `RefSpec`。
-
-从远程获取指定数据到本地，如：
+从远程仓库获取指定数据到本地仓库，如：
 
 ```txt
 branch master <==> +refs/heads/master:+refs/remotes/origin/master
@@ -358,17 +378,19 @@ $ tree .git/refs
 
 以上对应关系：
 
-  head@local                     |  remote@local                             | remote@remote
+  local-branch@local             |  remote-branch@local                      | remote-branch@remote
 ---------------------------------|-------------------------------------------|---------------------------------
 `master`                         | `origin/master`                           | `master`
 `feature/travis-ci`              | `origin/feature/travis-ci`                | `feature/travis-ci`
 `refs/heads/feature/travis-ci`   | `refs/remotes/origin/feature/travis-ci`   | `refs/heads/feature/travis-ci`
 
-注意：`RefSpec` 描述了 `remote@local` 和 `remote@remote` 之间的对应关系，但是不包含 `head@local` 和 `remote@local` 之间的关系，它们之间的存在的追踪关系在其他配置项中描述。
+表格中，只描述了存在一个远程仓库 `origin` 的情形，实际上是可能存在多个远程仓库的。
 
-`head@local` 下的 分支，是在本地存在的分支，可能从远程某个分支 `checkout`，也可能是本地新建的。
+注意：`RefSpec` 描述了 `remote-branch@local` 和 `remote-branch@remote` 之间的对应关系，并不是 `local-branch@local` 和 `remote-branch@remote` 之间的关系，它们之间的存在的追踪关系在其他配置项中描述。
 
-`RefSpec` 一般不会出现在命令行中，而是由命令自动写在配置文件中，但是可以在命令行中直接使用。
+`local-branch@local` 下的 分支，是在本地存在的分支，可能从远程某个分支 `checkout`，也可能是本地新建的。
+
+`RefSpec` 可以应用在命令行中，但是一般不会出现在命令行中，而是由某些命令自动写在配置文件中，并在某些命令执行时自动应用配置。
 
 例如：`git remote add remote-name`，Git 会获取远端上 `refs/heads/` 下面的所有引用，并将它写入到本地的 `refs/remotes/remote-name`。
 
@@ -437,6 +459,7 @@ git push origin :refs/heads/qa/master
 
 远程仓库 `refs/heads/*` 中 `创建` 的新分支，在同步数据的时候默认会被拉到本地，`删除` 的分支默认不会在本地进行同步删除，`修改` 的分支会被更新，并与本地追踪的开发分支进行合并。
 
+更多阅读：[Git 内部原理 - The Refspec](https://git-scm.com/book/zh/v1/Git-内部原理-The-Refspec)
 
 以上，通过 `RefSpec` 描述的 本地仓库 和 远程仓库 中 分支 是如何对应的，了解了 本地仓库 和 远程仓库 之间的对应关系。
 
@@ -444,6 +467,8 @@ git push origin :refs/heads/qa/master
 ### [git remote](https://git-scm.com/docs/git-remote)
 
 > 管理本地仓库对应的一组远程仓库，包括 查看、更新、添加、删除、重命名、设置 等一系列操作
+
+该命令的主要工作是在维护配置文件，也就是维护 `.git/config`，通常当不记得命令的时候，可以直接修改配置文件，因为配置文件格式很简单，很容易记忆。
 
 ```sh
 git remote [-v | --verbose]
@@ -513,7 +538,7 @@ $ git remote show origin
 
 ### [git fetch](https://git-scm.com/docs/git-fetch)
 
-> 下载 Refs 从另外一个仓库，以及完成他们的变更历史所需要的 Objects。追踪的远程分支将会被更新。
+> 从另外一个仓库下载 **Refs**，以及完成他们的变更历史所需要的 **Objects**，追踪的远程分支将会被更新。
 
 `git fetch` 的主要工作就是和远程同步 `Refs`，而 `Refs` 可以 被 `创建、修改、删除`，所以 `fetch` 操作必然应该能够同步这些变化。
 
@@ -574,13 +599,13 @@ Options:
 
 再看对应关系：
 
-  head@local                     |  remote@local                             | remote@remote
+  local-branch@local             |  remote-branch@local                      | remote-branch@remote
 ---------------------------------|-------------------------------------------|---------------------------------
 `master`                         | `origin/master`                           | `master`
 `feature/travis-ci`              | `origin/feature/travis-ci`                | `feature/travis-ci`
 `refs/heads/feature/travis-ci`   | `refs/remotes/origin/feature/travis-ci`   | `refs/heads/feature/travis-ci`
 
-`git fetch` 将 `remote@remote` fetch `remote@local`，而 `RefSpec（+refs/heads/*:refs/remotes/origin/*）` 前面的 `+` 使 Git 在不能快速前进的情况下也强制更新，所以不会出现 `remote@remote --merge--> remote@local` 的情况，实际上合并是不合理的行为，因为本地的 `refs/remotes/origin/*` 就是与远程保持同步的，如果合并了，就不同步了，更重要的是，远程分支可能修改了分支历史，如果合并，修改前的内容又合并进版本库了，有可能还需要解决冲突，而之后的 `remote@local --merge--> head@local` 又会有可能合并。
+`git fetch` 将 `remote-branch@remote` fetch `remote-branch@local`，而 `RefSpec（+refs/heads/*:refs/remotes/origin/*）` 前面的 `+` 使 Git 在不能快速前进的情况下也强制更新，所以不会出现 `remote-branch@remote --merge--> remote-branch@local` 的情况，实际上合并是不合理的行为，因为本地的 `refs/remotes/origin/*` 就是与远程保持同步的，如果合并了，就不同步了，更重要的是，远程分支可能修改了分支历史，如果合并，修改前的内容又合并进版本库了，有可能还需要解决冲突，而之后的 `remote-branch@local --merge--> local-branch@local` 又会有可能合并。
 
 ```sh
 git fetch                                         # 获取 所有远程仓库 上的所有分支，将其记录到 .git/FETCH_HEAD 文件中
@@ -620,7 +645,9 @@ Unpacking objects: 100% (34/34), done.
  * [new tag]             v1.1.0              -> v1.1.0
 ```
 
-`--prune` 只能清理 `.git/refs/remotes/remote-name` 目录下的远程追踪分支，而不会删除 `.git/refs/heads` 下的本地分支，即使这些分支已经合并，这些分支的清理需要特定的命令：
+`--prune` 只能清理 `.git/refs/remotes/remote-name` 目录下的远程追踪分支，而不会删除 `.git/refs/heads` 下的本地分支，即使这些分支已经合并，这些分支的清理需要特定的命令。
+
+清理本地已合并的分支：
 
 ```sh
 git branch --merged | egrep -v "(^\*|master|develop|release)" # 查看确认
@@ -638,11 +665,11 @@ Deleted branch feature/nvmrc (was 1d174fcd8).
 Deleted branch feature/winston-logstash (was f13700c66).
 ```
 
-同样远程仓库也有一些已经合并了，但是未删除的分支需要删除：
+清理远程已合并的分支：
 
 ```sh
-git branch -r --merged | egrep -v "(^\*|master|develop|release)" | sed 's/origin\//:/' # 查看确认
-git branch -r --merged | egrep -v "(^\*|master|develop|release)" | sed 's/origin\//:/' | xargs -n 1 git push origin
+$ git branch -r --merged | egrep -v "(^\*|master|develop|release)" | sed 's/origin\//:/' # 查看确认
+$ git branch -r --merged | egrep -v "(^\*|master|develop|release)" | sed 's/origin\//:/' | xargs -n 1 git push origin
 ```
 
 ```sh
@@ -671,7 +698,6 @@ From git@github.com:schacon/simple
 `fetch` 负责将 远程仓库 更新到 远程仓库在本地的对应部分，其他工作又其他 命令 负责。
 
 在实际使用中，大多数时候都是使用 `pull` 间接的使用 `fetch`。
-
 
 ### [git pull](https://git-scm.com/docs/git-pull)
 

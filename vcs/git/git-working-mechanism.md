@@ -540,6 +540,10 @@ $ git remote show origin
 
 > 从另外一个仓库下载 **Refs**，以及完成他们的变更历史所需要的 **Objects**，追踪的远程分支将会被更新。
 
+从一个或多个其他存储库中获取分支，以及完成它们的历史记录所需的对象，追踪的远程分支将会被更新（具体策略取决于 `RefSpec`）。
+
+默认情况下，还会获取指向要获取分支的历史记录上的标签，效果是获取指向您感兴趣的分支的标签。分支和标签统称为 `Refs`。也可以改变这种行为。
+
 `git fetch` 的主要工作就是和远程同步 `Refs`，而 `Refs` 可以 被 `创建、修改、删除`，所以 `fetch` 操作必然应该能够同步这些变化。
 
 * [REMOTES](https://git-scm.com/docs/git-fetch#_remotes_a_id_remotes_a)
@@ -554,9 +558,15 @@ git fetch --all [<options>]
 
 `.git/FETCH_HEAD`：是一个版本链接，记录在本地的一个文件中，指向着目前已经从远程仓库取下来的分支的末端版本。
 
-执行过 `fetch` 操作的项目都会存在一个 `FETCH_HEAD` 列表，其中每一行对应于远程服务器的一个分支。
+```sh
+$ cat .git/FETCH_HEAD                                
+25f8a1026c24d8dee71a7ffd43310588d01c246f                branch 'master' of github.com:liuyanjie/knowledge
+0d572bc6b622355f930688af4f44ae8f3416e12b        not-for-merge   branch 'feature/travis-ci' of github.com:liuyanjie/knowledge
+58a6618947d44720494860fbb77a6a22c9a30ddb        not-for-merge   branch 'feature/vpn' of github.com:liuyanjie/knowledge
+c761eb7a69dc54260b88c271b6271df559e7bce0        not-for-merge   branch 'php-lang' of github.com:liuyanjie/knowledge
+```
 
-当前分支指向的 `FETCH_HEAD`，就是这个文件第一行对应的那个分支。
+执行过 `fetch` 操作的项目都会存在一个 `FETCH_HEAD` 文件，其中每一行对应于远程服务器的一个分支。当前分支指向的 `FETCH_HEAD`，就是这个文件第一行对应的那个分支。
 
 从本质上来说，唯一能从服务器下拉取数据的只有 `fetch`，其他命令的下拉数据的操作都是基于 `fetch` 的，所以 `fetch` 必然需要能够尽可能处理所有下拉数据时可能出现的情况。
 

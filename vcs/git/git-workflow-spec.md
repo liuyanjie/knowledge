@@ -1,4 +1,4 @@
-# Git使用规范
+# Git workflow spec
 
 ## 分支命名
 
@@ -20,17 +20,7 @@
 
     实际开发中，每个新特征功能都应该进行独立的测试，所以可能需要发布到测试环境中供测试人员进行测试。目前开发流程不方便部署 `feature` 分支，所以目前不进行`feature` 的独立测试。
 
-* `develop` - 测试分支
-
-    该分支创建自 `master` 分支，定期与 `master` 分支同步，`featrue` 分支 在本 `merge` 到 `develop` 后 `push` 到 `github` 进行测试。
-
-    测试服运行此分支代码，作为开发环境中的主分支使用，任务是收集各个 `feature` 分支。
-
-    合并到 `develop` 分支的代码必须是已经完成开发并在本地进行过充分测试的 `feature`，即 `能够交给测试人员测试的版本`。
-
-    因该分支上可能包含多个 `feature`，且 多个 `feature` 可能处于不同阶段，所以该分支一般不合并的到 `master`
-
-* `release/*` - 预发布版本 （暂不使用）
+* `release/*` - 预发布版本
 
     预发布版本，当 `develop` 收集够了做一次版本发布所需的代码，就 `checkout -b` 出一个 `release` 分支，作为上线前的最后测试，除了 `bugfix` 外不接受任何提交。确认发布后分别 `merge` 到 `master` 和 `develop`。
 
@@ -41,6 +31,16 @@
     紧急修复分支，当 `master` 上出现 `bug` 需要修复时，基于 `master` 创建 `hotfix` 分支，修复完成后分别 `merge` 到 `master` 和 `develop`。
 
     开发分支中可能存在Bug，直接修改就可以了，无须创建分支修复Bug，所以，`hotfix/*` 只针对发布的版本。
+
+* `develop` - 测试分支
+
+    该分支创建自 `master` 分支，定期与 `master` 分支同步，`featrue` 分支 在本 `merge` 到 `develop` 后 `push` 到 `github` 进行测试。
+
+    测试服运行此分支代码，作为开发环境中的主分支使用，任务是收集各个 `feature` 分支。
+
+    合并到 `develop` 分支的代码必须是已经完成开发并在本地进行过充分测试的 `feature`，即 `能够交给测试人员测试的版本`。
+
+    因该分支上可能包含多个 `feature`，且 多个 `feature` 可能处于不同阶段，所以该分支一般不合并的到 `master`
 
 ## 标签命名
 

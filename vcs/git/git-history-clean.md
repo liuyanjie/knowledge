@@ -1,9 +1,5 @@
 # Git 清理提交历史
 
-ref:
-
-[git彻底删除提交历史](https://www.jianshu.com/p/21830b5cbd41)
-
 ## git filter-branch
 
 清理指定文件的历史
@@ -41,5 +37,4 @@ git push origin --force --tags
 
 ## BFG Repo-Cleaner
 
-https://rtyley.github.io/bfg-repo-cleaner/
-
+* https://github.com/rtyley/bfg-repo-cleaner

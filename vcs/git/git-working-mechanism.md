@@ -549,18 +549,11 @@ $ git remote show origin
 * [REMOTES](https://git-scm.com/docs/git-fetch#_remotes_a_id_remotes_a)
 * [CONFIGURED REMOTE-TRACKING BRANCHES](https://git-scm.com/docs/git-fetch#_configured_remote_tracking_branches_a_id_crtb_a)
 
-```sh
-git fetch [<options>] [<repository> [<refspec>…​]]
-git fetch [<options>] <group>
-git fetch --multiple [<options>] [(<repository> | <group>)…​]
-git fetch --all [<options>]
-```
-
 `.git/FETCH_HEAD`：是一个版本链接，记录在本地的一个文件中，指向着目前已经从远程仓库取下来的分支的末端版本。
 
 ```sh
 $ cat .git/FETCH_HEAD                                
-25f8a1026c24d8dee71a7ffd43310588d01c246f                branch 'master' of github.com:liuyanjie/knowledge
+25f8a1026c24d8dee71a7ffd43310588d01c246f                        branch 'master' of github.com:liuyanjie/knowledge
 0d572bc6b622355f930688af4f44ae8f3416e12b        not-for-merge   branch 'feature/travis-ci' of github.com:liuyanjie/knowledge
 58a6618947d44720494860fbb77a6a22c9a30ddb        not-for-merge   branch 'feature/vpn' of github.com:liuyanjie/knowledge
 c761eb7a69dc54260b88c271b6271df559e7bce0        not-for-merge   branch 'php-lang' of github.com:liuyanjie/knowledge

@@ -146,9 +146,9 @@ struct uv_stream_s {
 * `uv_{handle}_start`：启动 `handle` 使其处于 `UV_HANDLE_ACTIVE` 状态；
 * `uv_{handle}_stop`：停止 `handle` 使其处于 `UV_HANDLE_CLOSED` 状态，并移出 `loop->handle_queue` 队列。
 
-以上各派生类型的公共操作，提现了 `handle` 的声明周期，和 `loop` 生命周期类似，除此之外还包括一些特定 `handle` 特定处理逻辑。
+以上各派生类型的公共操作，体现了 `handle` 的生命周期，和 `loop` 生命周期类似，除此之外还包括一些特定 `handle` 特定处理逻辑。
 
-因为各个派生类型的初始化/启动/停止逻辑都有不同，所以并没有公共的初始化/启动/停止方法，每个派生类型根据需要提供特定的初始化/启动/停止函数，它们都在内部初始化/启动/停止 `uv_handle_t`。对应的方法为：
+因为各个派生类型的`初始化/启动/停止`逻辑都不相同，所以并没有公共的`初始化/启动/停止`方法，每个派生类型根据需要实现类型特定的`初始化/启动/停止`函数，同时它们还需要在内部调用基类的方法进行对象 `初始化/启动/停止` `uv_handle_t`，对应的方法为：
 
 * `uv__handle_init`
 * `uv__handle_start`
@@ -160,7 +160,7 @@ struct uv_stream_s {
 
 ## Init：`uv__handle_init`
 
-`uv_handle_t` 的初始化代码是用宏 `uv__handle_init` 定义的宏函数，实现如下：
+`uv_handle_t` 的初始化代码是用宏 `uv__handle_init` 定义的宏函数，采用宏可实现内联 `inline` 函数的效果，实现如下：
 
 https://github.com/libuv/libuv/blob/v1.28.0/src/uv-common.h#L282
 

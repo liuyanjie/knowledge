@@ -1,9 +1,8 @@
 # libuv源码分析（八）线程池（Threadpool）
 
-* http://docs.libuv.org/en/v1.x/threadpool.html
-* http://docs.libuv.org/en/v1.x/dns.html
+多线程在程序设计中是常用的提升并发计算能力、提升吞吐量的常用手段，线程通常事先创建好，形成线程池，来对线程进行管理。
 
-线程池在程序设计中是常用的提升并发计算能力、提升吞吐量的常用手段，在 libnv 也不例外，并且结合事件循环，实现了异步支持。
+libuv 内部也实现了线程池，主要用于支持异步任务，在 libuv 中，线程池是和事件循环配合工作的。
 
 libuv 提供可用于执行用户代码的线程池，并且能够在任务完成时，向事件循环线程发送消息通知主线程完成收尾工作。
 
@@ -11,7 +10,7 @@ libuv 提供可用于执行用户代码的线程池，并且能够在任务完�
 
 ## 初始化
 
-线程池全局的并且跨所有事件循环共享，当特定的函数使用线程池时（例如，调用 `uv_queue_work()`），libuv 通过 `init_threads` 函数预分配和初始化一定数量的线程，初始化函数只会被调用一次，这会带来一定的内存开销，但是可以提升运行时性能。
+线程池是全局的结构，所以所有的事件循环实例共享同一个线程池，当特定的函数使用线程池时（例如，调用 `uv_queue_work()`），libuv 通过 `init_threads` 函数预分配和初始化一定数量的线程，初始化函数只会被调用一次，这会带来一定的内存开销，但是可以提升运行时性能。
 
 ### 线程池初始化
 
@@ -413,3 +412,11 @@ static void post(QUEUE* q, enum uv__work_kind kind) {
 ## Example
 
 线程池在 libuv 内部用于完成所有文件系统操作（`requests`），也用于实现 `getaddrinfo` 和 `getnameinfo` 等 DNS 相关的操作（`requests`）。搜索 `uv_queue_work` 可找到相关使用位置。可以这些内部实现作为使用示例，在内部，并不通过 `uv_queue_work` 提交任务，而是直接调用 `uv__work_submit`，因为它们都有各自不同的 `uv__x_work` 和 `uv__x_done` 实现。
+
+
+## 文档
+
+* http://docs.libuv.org/en/v1.x/threadpool.html
+* http://docs.libuv.org/en/v1.x/dns.html
+* 
+

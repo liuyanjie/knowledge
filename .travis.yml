@@ -6,8 +6,8 @@ node_js:
 
 env:
   global:
-  - BLOG_REPO_NAME=liuyanjie.github.io
-  - BLOG_REPO=https://github.com/liuyanjie/liuyanjie.github.io.git
+  - BLOG_REPO_NAME=butonly.github.io
+  - BLOG_REPO=https://github.com/butonly/butonly.github.io.git
 
 before_install:
   # - export TZ='Asia/Shanghai'

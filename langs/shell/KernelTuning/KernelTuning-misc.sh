@@ -15,6 +15,10 @@ ss -s
 
 netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'
 
+netstat -s | grep "times the listen queue of a socket overflowed"
+
+netstat -nat | grep "192.168.0.1:22" | awk '{print $5}'| awk -F: '{print $1}'|sort|uniq -c|sort -nr|head -20
+
 apt-get install atop
 apt-get install htop
 apt-get install sysstat

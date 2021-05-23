@@ -16,6 +16,17 @@
 * [进大厂必须掌握的50个微服务面试问题](https://cloud.tencent.com/developer/article/1346868)
 * [简单聊聊SOA和微服务](https://juejin.im/post/592f87feb123db0064e5ef7c)
 
+## 架构图
+
+* https://en.wikipedia.org/wiki/The_Open_Group_Architecture_Framework
+* https://www.opengroup.org/togaf
+* https://c4model.com/
+* [如何画出一张合格的技术架构图？](https://www.jiqizhixin.com/articles/2019-04-11-22)
+* [架构设计实践五部曲](https://www.infoq.cn/profile/1671085/publish)
+* http://www.woshipm.com/pmd/1065960.html
+* https://cloud.tencent.com/developer/article/1073501
+* https://www.freedgo.com/
+
 ## 高并发
 
 ## LB & Proxy

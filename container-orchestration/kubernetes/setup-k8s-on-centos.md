@@ -20,23 +20,33 @@ yum install rng-tools && systemctl start rngd
 yum install virtio-rng
 
 systemctl enable --now shadowsocks-libev-local && systemctl start shadowsocks-libev-local
+systemctl enable --now shadowsocks-libev-server && systemctl start shadowsocks-libev-server
 systemctl status shadowsocks-libev-local
 journalctl -u shadowsocks-libev-local
 ```
+
+cat > /etc/shadowsocks-libev/config.json << 'EOF'
+{
+ "server": "0.0.0.0",
+ "server_port": 58338,
+ "password": "p@$$w0rd",
+ "method": "chacha20-ietf-poly1305"
+}
 
 ```
 error while loading shared libraries: libmbedcrypto.so.0
 https://github.com/shadowsocks/shadowsocks-libev/issues/1966
 
 ln -s /usr/lib64libmbedcrypto.so.1 /usr/lib64libmbedcrypto.so.0
+ln -s /usr/lib64/libmbedcrypto.so.3 /usr/lib64/libmbedcrypto.so.2
 ```
 
 ```sh
-vim /etc/shadowsocks.json  
+vim /etc/shadowsocks.json
 {  
     "server": "hk1-sta69.rhinq.space",  
-    "server_port": 39654,  
-    "local_port": 1080,  
+    "server_port": 39654,
+    "local_port": 1080,
     "password": "MVqQwnw7VYHM",  
     "timeout": 600,  
     "method": "chacha20-ietf-poly1305"  
@@ -46,6 +56,8 @@ vim /etc/shadowsocks.json
 ss-local -c /etc/shadowsocks.json -d start/stop
 
 start service
+
+docker run --name shadowsocks-libev --rm -p 39654:39654 -p 1080:1080 -v /etc/shadowsocks-libev/config.json:/etc/shadowsocks-libev/config.json shadowsocks/shadowsocks-libev
 
 ## install CLI proxy tools
 

@@ -83,8 +83,6 @@ ExecuteBootstrapper
 1. 启动过程
 2. 原生模块是怎么加载的
 
-
-
 原生模块注册：
 
 ```c
@@ -214,3 +212,11 @@ inline v8::Local<v8::String> OneByteString(v8::Isolate* isolate,
 }
 ```
 
+
+## Node.js Startup
+
+1. 进程启动
+
+PlatformInit 进行平台相关的初始化设置、信号处理器设置、Hooks设置
+
+InitializeNodeWithArgs
